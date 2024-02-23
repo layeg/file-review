@@ -1,6 +1,9 @@
 ---
 - name : Configure system
   hosts : all
+  collections:
+     - ansible.builtin
+     - ansible.posix
   tasks :
         - name : Configure a custom motd
           template :
