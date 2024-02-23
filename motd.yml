@@ -1,0 +1,37 @@
+---
+- name : Configure system
+  hosts : all
+  tasks :
+        - name : Configure a custom motd
+          template :
+                   src : motd.j2
+                   dest : /etc/motd
+                   owner : root
+                   group : root
+                   mode : 0644
+
+        - name : Check file exist
+          stat :
+               path : /etc/motd
+          register : motd
+
+        - name : Display stat
+          debug: 
+               var : motd
+
+        - name : Copy file /etc on managed hosts
+          copy :
+               src : issue
+               dest : /etc/issue
+               owner : root
+               group : root
+               mode : 0644
+
+        - name : Ensure /etc/issue.net is a symlink to /etc/issue
+          file :
+               src : /etc/issue
+               dest : /etc/issue.net
+               state : link
+               owner : root
+               group : root
+               force : yes
